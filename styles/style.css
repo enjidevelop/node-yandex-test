@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/OpenSans-Light.ttf');
+}
+
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background: #eee;
+    margin: 0;
+}
+
+.container {
+    max-width: 960px;
+    min-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form__row {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form__placeholder {
+    margin-bottom: 5px;
+}
+
+.form__input {
+    width: 50%;
+    min-width: 400px;
+    padding: 5px;
+    font-size: 16px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    outline: none;
+    border: none;
+}
+
+.form__input:focus {
+    box-shadow: 0 0 1px 2px #ffdb4d;
+    transition: .3s ease;
+}
+
+.form__submit {
+    border: none;
+    background: transparent;
+    color: #000;
+    padding: 0 10px 0 0;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.button__text {
+    position: relative;
+    background: #ffdb4d;
+    display: block;
+    padding: 0 10px;
+    line-height: 36px;
+    font-size: 16px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.button__text::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 22px 0 22px 11px;
+    border-color: rgba(255,219,76,0);
+    border-left-color: #ffdb4d;
+}

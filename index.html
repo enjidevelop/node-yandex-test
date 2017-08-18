@@ -5,8 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>NodeJS Yandex Test</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <script async src="./scripts/script.js"></script>
 </head>
 <body>
-
+    <div class="container">
+        <h1>NodeJS Yandex Test</h1>
+        <form action="" method="POST" id="myForm" class="form">
+            <label class="form__row">
+                <div class="form__placeholder">ФИО</div>
+                <input type="text" name="fio" class="form__input">
+            </label>
+            <label class="form__row">
+                <div class="form__placeholder">Email</div>
+                <input type="text" name="email" class="form__input">
+            </label>
+            <label class="form__row">
+                <div class="form__placeholder">Телефон</div>
+                <input type="text" name="phone" class="form__input">
+            </label>
+            <button type="submit" id="submitButton" class="button form__submit">
+                <span class="button__text">Отправить</span>
+            </button>
+        </form>
+    </div>
 </body>
 </html>
