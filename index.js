@@ -8,32 +8,33 @@ class Forms {
         let isValid = true;
         let {fio, email, phone} = this.getData();
 
+        function setInvalid(input) {
+            isValid = false;
+            errorFields.push(input);
+        }
+
         // fio
         fio = trimAll(fio).split(' ');
 
         if (fio.length !== 3) {
-            isValid = false;
-            errorFields.push('fio');
+            setInvalid('fio');
         }
 
         // email
         if (!getEmailRegExp().test(email)) {
-            isValid = false;
-            errorFields.push('email');
+            setInvalid('email');
         } else {
             let domain = email.split('@')[1];
             let isValidDomain = getValidDomain().some(validDomains => domain === validDomains);
 
             if (!isValidDomain) {
-                isValid = false;
-                errorFields.push('email');
+                setInvalid('email');
             }
         }
 
         // phone
         if (!getPhoneRegExp().test(phone)) {
-            isValid = false;
-            errorFields.push('phone');
+            setInvalid('phone');
         } else {
             let sum = phone.replace(/\D+/g,'')
                 .split('')
@@ -42,8 +43,7 @@ class Forms {
                 }, 0);
 
             if (sum > 30) {
-                isValid = false;
-                errorFields.push('phone');
+                setInvalid('phone');
             }
         }
 
@@ -76,23 +76,32 @@ class Forms {
         event.preventDefault();
 
         let validation = this.validate();
+        let url = this.form.action;
 
-        if (!validation.isValid) {
-            validation.errorFields.forEach(i => {
+        for(let i = 0; i < this.form.length; i++) {
+            if (validation.errorFields.indexOf(this.form[i].name) !== -1) {
                 this.form[i].classList.add('error');
-            });
-        } else {
-            this.form.querySelectorAll('.error').forEach(i => i.classList.remove('error'));
+            } else {
+                this.form[i].classList.remove('error');
+            }
+        }
 
+        if (validation.isValid) {
+            this.form.querySelectorAll('.error').forEach(i => i.classList.remove('error'));
+            formBtn.setAttribute('disabled', 'disabled');
+
+            fetch(url, {
+                method: 'POST',
+            })
         }
     }
 }
 
 const form = document.getElementById('myForm');
-const MyForm = new Forms(form);
 const formBtn = form.submitButton;
+window.MyForm = new Forms(form);
 
-formBtn.addEventListener('click', (e) => MyForm.submit(e));
+form.addEventListener('submit', (e) => MyForm.submit(e));
 
 // utils
 function trimAll(s) {

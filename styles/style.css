@@ -69,6 +69,14 @@ body {
     overflow: hidden;
 }
 
+.form__submit[disabled] .button__text {
+    background: gray;
+}
+
+.form__submit[disabled] .button__text::before {
+    border-left-color: gray;
+}
+
 .button__text {
     position: relative;
     background: #ffdb4d;
