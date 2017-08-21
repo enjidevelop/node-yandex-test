@@ -91,15 +91,44 @@
                 this.form.querySelectorAll('.error').forEach(i => i.classList.remove('error'));
                 formBtn.setAttribute('disabled', 'disabled');
 
-                fetch(url, {
-                    method: 'POST'
-                })
+                let getData = this.getData.bind(this);
+
+                (function fetchData() {
+                    fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(getData()),
+                    }).then(res => {
+                        if (res.status !== 200) {
+                            return;
+                        }
+
+                        res.json().then(data => {
+                            switch(data.status) {
+                                case 'success':
+                                    result.classList.add(data.status);
+                                    result.textContent = 'Success';
+                                    break;
+                                case 'error':
+                                    result.classList.add(data.status);
+                                    result.textContent = data.reason;
+                                    break;
+                                case 'progress':
+                                    result.classList.add(data.status);
+                                    setTimeout(fetchData, data.timeout);
+                                    break;
+                                default:
+                                    return data;
+                            }
+                        });
+                    }).catch(err => console.err(err));
+                })()
             }
         }
     }
 
     const form = document.getElementById('myForm');
     const formBtn = form.submitButton;
+    const result = document.getElementById('resultContainer');
     window.MyForm = new Forms(form);
 
     form.addEventListener('submit', (e) => MyForm.submit(e));
@@ -107,8 +136,8 @@
     // utils
     function trimAll(s) {
         return s.replace(/\s+$/g, '')
-        .replace(/^\s+/g, '')
-        .replace(/\s\s+/g, ' ');
+                .replace(/^\s+/g, '')
+                .replace(/\s\s+/g, ' ');
     }
 
     function getValidDomain() {

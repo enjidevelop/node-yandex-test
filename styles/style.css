@@ -105,6 +105,21 @@ body {
     min-height: 34px;
     padding: 5px;
     background: #fff;
+    border: 1px solid transparent;
+    transition: border-color .3s ease;
+
+}
+
+.result.success {
+    border-color: green;
+}
+
+.result.error {
+    border-color: red;
+}
+
+.result.progress {
+    border-color: #ffdb4d;
 }
 
 .result-headline {
