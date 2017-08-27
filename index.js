@@ -1,9 +1,17 @@
 (() => {
     class Forms {
+        /**
+         * Create a object with methods for working with a form
+         * @param  {Object} form - DOM element form
+         */
         constructor(form) {
             this.form = form;
         }
 
+        /**
+         * Validate forms fields
+         * @return {Object} - with isValid - state of validation and array with error fields
+         */
         validate() {
             const errorFields = [];
             let isValid = true;
@@ -51,6 +59,10 @@
             return {isValid, errorFields};
         }
 
+        /**
+         * Return object with form fields values
+         * @return {Object}
+         */
         getData() {
             return {
                 fio: this.form.fio.value,
@@ -59,6 +71,10 @@
             };
         }
 
+        /**
+         * set values to form fields
+         * @param {Object} data
+         */
         setData(data) {
             if (data.fio) {
                 this.form.fio.value = data.fio;
@@ -73,6 +89,10 @@
             }
         }
 
+        /**
+         * form submit
+         * @param  {Object} event - object of event
+         */
         submit(event) {
             event.preventDefault();
 
@@ -91,14 +111,16 @@
                 this.form.querySelectorAll('.error').forEach(i => i.classList.remove('error'));
                 formBtn.setAttribute('disabled', 'disabled');
 
-                let getData = this.getData.bind(this);
+                let formData = this.getData();
 
                 (function fetchData() {
                     fetch(url, {
                         method: 'POST',
-                        body: JSON.stringify(getData()),
+                        body: JSON.stringify(formData),
                     }).then(res => {
                         if (res.status !== 200) {
+                            formBtn.removeAttribute('disabled');
+                            result.textContent = 'Упс, кажется что-то пошло не так. Попробуйте повторить позже.';
                             return;
                         }
 

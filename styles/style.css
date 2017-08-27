@@ -103,6 +103,7 @@ body {
 .result {
     width: 400px;
     min-height: 34px;
+    margin-bottom: 10px;
     padding: 5px;
     background: #fff;
     border: 1px solid transparent;
